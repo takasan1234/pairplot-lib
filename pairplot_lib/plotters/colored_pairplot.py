@@ -36,12 +36,14 @@ def create_colored_pairplot(df: pd.DataFrame, output_path: str) -> str:
     # マーカーは全て丸（'o'）に統一
     marker_list = ['o'] * len(unique_z)
     
-    # ペアプロットの作成（白黒、凡例なし）
+    # ペアプロットの作成（白黒）
     pg = sns.pairplot(df, hue='z', markers=marker_list, diag_kind="hist",
                       palette=palette, 
                       plot_kws={'edgecolor': 'black', 's': 50, 'linewidth': 1.5, 'alpha': 0.7},
-                      diag_kws={'edgecolor': 'black'},
-                      legend=False)  # 凡例を表示しない
+                      diag_kws={'edgecolor': 'black'})
+    
+    # 凡例を削除
+    pg._legend.remove()
     
     # 画像にして保存
     pg.savefig(output_path)

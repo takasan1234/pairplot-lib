@@ -76,7 +76,7 @@ def load_csv_robust(file_path: str) -> pd.DataFrame:
     """
     # 1) 自動検出（タブ/カンマ/セミコロンなど）
     try:
-        df_auto = pd.read_csv(file_path, sep=None, engine='python')
+        df_auto = pd.read_csv(file_path, sep=None, engine='python', comment='#')
         df_auto.columns = df_auto.columns.str.strip()
         if len(df_auto.columns) > 1:
             return df_auto
@@ -85,7 +85,7 @@ def load_csv_robust(file_path: str) -> pd.DataFrame:
     
     # 2) 任意空白（タブ＋空白混在も分割）
     try:
-        df_ws = pd.read_csv(file_path, sep=r"\s+", engine='python')
+        df_ws = pd.read_csv(file_path, sep=r"\s+", engine='python', comment='#')
         df_ws.columns = df_ws.columns.str.strip()
         if len(df_ws.columns) > 1:
             return df_ws
@@ -94,7 +94,7 @@ def load_csv_robust(file_path: str) -> pd.DataFrame:
     
     # 3) タブ区切り
     try:
-        df_tab = pd.read_csv(file_path, sep='\t')
+        df_tab = pd.read_csv(file_path, sep='\t', comment='#')
         df_tab.columns = df_tab.columns.str.strip()
         if len(df_tab.columns) > 1:
             return df_tab
@@ -102,7 +102,7 @@ def load_csv_robust(file_path: str) -> pd.DataFrame:
         pass
     
     # 4) カンマ区切り（最終手段）
-    df_comma = pd.read_csv(file_path, sep=',')
+    df_comma = pd.read_csv(file_path, sep=',', comment='#')
     df_comma.columns = df_comma.columns.str.strip()
     return df_comma
 
