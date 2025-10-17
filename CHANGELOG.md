@@ -44,7 +44,7 @@
 #### パッケージ化
 - スタンドアロンスクリプトから完全なPythonパッケージへ移行
 - パッケージ名: `pairplot_lib`
-- CLIコマンド: `wao-pairplot`
+- CLIコマンド: `pairplot`
 - `python -m pairplot_lib` での実行もサポート
 
 #### 構造の整理とリファクタリング
