@@ -1,4 +1,4 @@
-# WAO Tech Pairplot - 依存パッケージ
+# Pairplot - 依存パッケージ
 # データ可視化ツールに必要な最小限のパッケージ
 
 pandas>=2.0.0
