@@ -1,4 +1,4 @@
-# Sample data for Pairplot
+# Sample data forPairplot
 # z列: 省略可能。0=グループA, 1=グループB などで指定。
 a	b	c	z
 514	30477099	28326340	0
