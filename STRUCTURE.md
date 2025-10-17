@@ -80,5 +80,5 @@ my_analysis/                          # ユーザーの作業ディレクトリ
     └── your_data_pairplot.png        # 生成された画像
 ```
 
-コマンド`wao-pairplot`は、カレントディレクトリの`data/`と`output/`を使用します。
+コマンド`pairplot-lib`は、カレントディレクトリの`data/`と`output/`を使用します。
 

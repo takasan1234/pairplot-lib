@@ -1,4 +1,4 @@
-# Sample data for WAO Tech Pairplot
+# Sample data for Pairplot
 # z列: 省略可能。0=グループA, 1=グループB などで指定。
 a	b	c	z
 514	30477099	28326340	0
