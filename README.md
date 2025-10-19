@@ -97,6 +97,9 @@ pip install --force-reinstall "git+https://github.com/takasan1234/pairplot-lib.g
 - `data/`フォルダにCSVがあるか確認
 - CSVの1行目に列名があるか確認
 
+### 新しく追加して欲しい機能があるorバグ報告
+- このGithubのリポジトリのIssueへ
+
 ---
 
 **作者**: Takayuki Tsuji  
