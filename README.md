@@ -2,10 +2,16 @@
 
 CSVデータから白黒のペアプロット・散布図を自動生成するツール
 
+## デモ動画
 
-
+https://github.com/user-attachments/assets/0c83cada-bd24-4853-9e09-55efc2aa0b93
 
 ## 使い方
+
+### 動画がいい方はこちら
+https://github.com/user-attachments/assets/c2e13060-5ab9-42cb-8a64-ab98122bafce
+
+↓テキスト形式の説明は以下
 
 ### 0. 仮想環境を作成（任意, 以下はvenvを使用した例）
 ```bash
