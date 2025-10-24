@@ -5,15 +5,51 @@ pairplot4.pyの機能を移植
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy import stats
 
 
-def create_colored_pairplot(df: pd.DataFrame, output_path: str) -> str:
+def corr_func(x, y, **kws):
+    """
+    カスタムの相関係数アノテーション関数
+    散布図の下三角部分に相関係数を表示
+    """
+    mask = ~np.logical_or(np.isnan(x), np.isnan(y))
+    x, y = x[mask], y[mask]
+    
+    # データの長さをチェック
+    if len(x) < 2 or len(y) < 2:
+        ax = plt.gca()
+        ax.annotate("r = N/A",
+                    xy=(.2, .5),
+                    xycoords=ax.transAxes,
+                    size=16)
+        return
+    
+    try:
+        r, _ = stats.pearsonr(x, y)
+        ax = plt.gca()
+        ax.annotate("r = {:.3f}".format(r),
+                    xy=(.2, .5),
+                    xycoords=ax.transAxes,
+                    size=16)
+    except ValueError:
+        # 相関係数計算でエラーが発生した場合
+        ax = plt.gca()
+        ax.annotate("r = N/A",
+                    xy=(.2, .5),
+                    xycoords=ax.transAxes,
+                    size=16)
+
+
+def create_colored_pairplot(df: pd.DataFrame, output_path: str, show_correlation: bool = False) -> str:
     """
     色分け識別ありペアプロットを作成（z列による色分け）
     
     Args:
         df: 入力DataFrame（z列を含む必要がある）
         output_path: 出力ファイルパス
+        show_correlation: 相関係数を表示するかどうか
         
     Returns:
         保存したファイルパス
@@ -41,6 +77,10 @@ def create_colored_pairplot(df: pd.DataFrame, output_path: str) -> str:
                       palette=palette, 
                       plot_kws={'edgecolor': 'black', 's': 50, 'linewidth': 1.5, 'alpha': 0.7},
                       diag_kws={'edgecolor': 'black'})
+    
+    # 相関係数を表示する場合のみ、下半分の三角形に相関係数を表示
+    if show_correlation:
+        pg.map_lower(corr_func)
     
     # 凡例を削除
     pg._legend.remove()

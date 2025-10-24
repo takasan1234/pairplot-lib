@@ -42,7 +42,7 @@ def corr_func(x, y, **kws):
                     size=16)
 
 
-def create_basic_pairplot(df: pd.DataFrame, numeric_cols: list, output_path: str) -> str:
+def create_basic_pairplot(df: pd.DataFrame, numeric_cols: list, output_path: str, show_correlation: bool = True) -> str:
     """
     基本的なペアプロット（相関係数表示付き）を作成
     
@@ -50,6 +50,7 @@ def create_basic_pairplot(df: pd.DataFrame, numeric_cols: list, output_path: str
         df: 入力DataFrame
         numeric_cols: プロットする数値列のリスト
         output_path: 出力ファイルパス
+        show_correlation: 相関係数を表示するかどうか
         
     Returns:
         保存したファイルパス
@@ -75,16 +76,18 @@ def create_basic_pairplot(df: pd.DataFrame, numeric_cols: list, output_path: str
                       plot_kws={'color': 'black', 's': 30, 'alpha': 0.6},
                       diag_kws={'color': 'black', 'edgecolor': 'black'})
     
-    # 下半分の三角形に相関係数を表示
-    pg.map_lower(corr_func)
+    # 相関係数を表示する場合のみ、下半分の三角形に相関係数を表示
+    if show_correlation:
+        pg.map_lower(corr_func)
     
     # プロットを保存
     pg.savefig(output_path)
     
-    # 相関係数の行列を表示
-    print("相関係数行列:")
-    print(corr_matrix)
-    print()
+    # 相関係数の行列を表示（相関係数を表示する場合のみ）
+    if show_correlation:
+        print("相関係数行列:")
+        print(corr_matrix)
+        print()
     
     # matplotlib のフィギュアをクローズしてメモリを解放
     plt.close()

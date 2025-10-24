@@ -88,8 +88,28 @@ def run_basic_pairplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR) -
     base_name = get_base_name(selected_file)
     output_path = generate_output_path(output_dir, base_name, "pairplot")
     
+    # 相関係数表示の選択
+    print("\n相関係数をグラフ上に表示しますか？")
+    print("1. はい（相関係数を表示）")
+    print("2. いいえ（相関係数を表示しない）")
+    
+    while True:
+        try:
+            choice = input("選択してください (1-2): ").strip()
+            if choice == "1":
+                show_correlation = True
+                break
+            elif choice == "2":
+                show_correlation = False
+                break
+            else:
+                print("1または2を入力してください。")
+        except KeyboardInterrupt:
+            print("\n\n処理を中断しました。")
+            sys.exit(0)
+    
     # プロット作成
-    result_path = create_basic_pairplot(df, numeric_cols, output_path)
+    result_path = create_basic_pairplot(df, numeric_cols, output_path, show_correlation)
     
     # 結果表示
     print("=" * 50)
@@ -123,9 +143,29 @@ def run_colored_pairplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR)
     base_name = get_base_name(selected_file)
     output_path = generate_output_path(output_dir, base_name, "pairplot_colored")
     
+    # 相関係数表示の選択
+    print("\n相関係数をグラフ上に表示しますか？")
+    print("1. はい（相関係数を表示）")
+    print("2. いいえ（相関係数を表示しない）")
+    
+    while True:
+        try:
+            choice = input("選択してください (1-2): ").strip()
+            if choice == "1":
+                show_correlation = True
+                break
+            elif choice == "2":
+                show_correlation = False
+                break
+            else:
+                print("1または2を入力してください。")
+        except KeyboardInterrupt:
+            print("\n\n処理を中断しました。")
+            sys.exit(0)
+    
     # プロット作成
     try:
-        result_path = create_colored_pairplot(df, output_path)
+        result_path = create_colored_pairplot(df, output_path, show_correlation)
         
         # 結果表示
         print("=" * 50)
