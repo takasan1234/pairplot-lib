@@ -4,7 +4,7 @@ CSVデータから白黒のペアプロット・散布図を自動生成する�
 
 ## デモ動画
 
-https://github.com/user-attachments/assets/0c83cada-bd24-4853-9e09-55efc2aa0b93
+https://github.com/user-attachments/assets/a27426da-4aad-46a8-8114-3dc187482488
 
 ## 使い方
 
