@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.gridspec import GridSpec
+from scipy import stats
 from typing import Tuple
 
 
@@ -15,7 +16,8 @@ def create_scatter_boxplot(
     y_var: str,
     output_path: str,
     has_z_column: bool = False,
-    with_boxplot: bool = True
+    with_boxplot: bool = True,
+    annotation_type: str = "none"
 ) -> str:
     """
     散布図を作成（オプションで箱ひげ図も追加可能）
@@ -27,6 +29,7 @@ def create_scatter_boxplot(
         output_path: 出力ファイルパス
         has_z_column: z列が存在する場合はTrue（色分けする）
         with_boxplot: Trueの場合は箱ひげ図も表示
+        annotation_type: 表示タイプ（"correlation": 相関係数、"regression": 回帰直線、"none": なし）
         
     Returns:
         保存したファイルパス
@@ -82,6 +85,42 @@ def create_scatter_boxplot(
     else:
         # z列がない場合は通常の散布図（黒丸）
         ax_scatter.scatter(df[x_var], df[y_var], c='black', alpha=0.7, s=100)
+    
+    # 相関係数と回帰直線の表示
+    if annotation_type == "correlation" or annotation_type == "regression":
+        x_data = df[x_var].dropna()
+        y_data = df[y_var].dropna()
+        
+        # NaNを除いたデータを取得
+        mask = ~(np.isnan(x_data.values) | np.isnan(y_data.values))
+        x_clean = x_data.values[mask]
+        y_clean = y_data.values[mask]
+        
+        if len(x_clean) >= 2:
+            try:
+                if annotation_type == "correlation":
+                    # 相関係数を計算して表示
+                    r, p_value = stats.pearsonr(x_clean, y_clean)
+                    corr_text = f"r = {r:.3f}\n(p < 0.001)" if p_value < 0.001 else f"r = {r:.3f}\n(p = {p_value:.3f})"
+                    ax_scatter.text(0.05, 0.95, corr_text, 
+                                   transform=ax_scatter.transAxes,
+                                   fontsize=14,
+                                   verticalalignment='top',
+                                   bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+                    print(f"相関係数: r = {r:.3f}, p値 = {p_value:.3f}")
+                
+                elif annotation_type == "regression":
+                    # 回帰直線を計算して描画
+                    slope, intercept, r_value, p_value, std_err = stats.linregress(x_clean, y_clean)
+                    x_line = np.array([x_clean.min(), x_clean.max()])
+                    y_line = slope * x_line + intercept
+                    ax_scatter.plot(x_line, y_line, 'k-', linewidth=2, alpha=0.8, label='回帰直線')
+                    
+                    # 回帰式をターミナル上に表示
+                    print(f"回帰直線: y = {slope:.3f}x + {intercept:.3f}, R² = {r_value**2:.3f}")
+            
+            except (ValueError, RuntimeError) as e:
+                print(f"相関係数・回帰直線の計算に失敗しました: {e}")
     
     # 散布図の設定
     ax_scatter.set_xlabel(x_var, fontsize=14)

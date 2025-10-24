@@ -89,27 +89,31 @@ def run_basic_pairplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR) -
     output_path = generate_output_path(output_dir, base_name, "pairplot")
     
     # 相関係数表示の選択
-    print("\n相関係数をグラフ上に表示しますか？")
-    print("1. はい（相関係数を表示）")
-    print("2. いいえ（相関係数を表示しない）")
+    print("\n追加オプション")
+    print("1. 相関係数を表示")
+    print("2. 回帰直線を表示")
+    print("3. なし")
     
     while True:
         try:
-            choice = input("選択してください (1-2): ").strip()
+            choice = input("選択してください (1-3): ").strip()
             if choice == "1":
-                show_correlation = True
+                annotation_type = "correlation"
                 break
             elif choice == "2":
-                show_correlation = False
+                annotation_type = "regression"
+                break
+            elif choice == "3":
+                annotation_type = "none"
                 break
             else:
-                print("1または2を入力してください。")
+                print("1から3の範囲で入力してください。")
         except KeyboardInterrupt:
             print("\n\n処理を中断しました。")
             sys.exit(0)
     
     # プロット作成
-    result_path = create_basic_pairplot(df, numeric_cols, output_path, show_correlation)
+    result_path = create_basic_pairplot(df, numeric_cols, output_path, annotation_type)
     
     # 結果表示
     print("=" * 50)
@@ -144,28 +148,32 @@ def run_colored_pairplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR)
     output_path = generate_output_path(output_dir, base_name, "pairplot_colored")
     
     # 相関係数表示の選択
-    print("\n相関係数をグラフ上に表示しますか？")
-    print("1. はい（相関係数を表示）")
-    print("2. いいえ（相関係数を表示しない）")
+    print("\n追加オプション")
+    print("1. 相関係数を表示")
+    print("2. 回帰直線を表示")
+    print("3. なし")
     
     while True:
         try:
-            choice = input("選択してください (1-2): ").strip()
+            choice = input("選択してください (1-3): ").strip()
             if choice == "1":
-                show_correlation = True
+                annotation_type = "correlation"
                 break
             elif choice == "2":
-                show_correlation = False
+                annotation_type = "regression"
+                break
+            elif choice == "3":
+                annotation_type = "none"
                 break
             else:
-                print("1または2を入力してください。")
+                print("1から3の範囲で入力してください。")
         except KeyboardInterrupt:
             print("\n\n処理を中断しました。")
             sys.exit(0)
     
     # プロット作成
     try:
-        result_path = create_colored_pairplot(df, output_path, show_correlation)
+        result_path = create_colored_pairplot(df, output_path, annotation_type)
         
         # 結果表示
         print("=" * 50)
@@ -253,8 +261,32 @@ def run_scatter_boxplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR) 
             suffix = f"{x_var}_vs_{y_var}"
     output_path = generate_output_path(output_dir, base_name, suffix)
     
+    # 相関係数・回帰直線の表示オプション
+    print("\n相関係数・回帰直線をグラフ上に表示しますか？")
+    print("1. 相関係数を表示")
+    print("2. 回帰直線を表示")
+    print("3. なし")
+    
+    while True:
+        try:
+            choice = input("選択してください (1-3): ").strip()
+            if choice == "1":
+                annotation_type = "correlation"
+                break
+            elif choice == "2":
+                annotation_type = "regression"
+                break
+            elif choice == "3":
+                annotation_type = "none"
+                break
+            else:
+                print("1から3の範囲で入力してください。")
+        except KeyboardInterrupt:
+            print("\n\n処理を中断しました。")
+            sys.exit(0)
+    
     # プロット作成
-    result_path = create_scatter_boxplot(df, x_var, y_var, output_path, has_z_column, with_boxplot)
+    result_path = create_scatter_boxplot(df, x_var, y_var, output_path, has_z_column, with_boxplot, annotation_type)
     
     # 結果表示
     print("\n" + "=" * 50)
