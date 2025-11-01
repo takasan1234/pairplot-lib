@@ -2,6 +2,7 @@
 CLIメインロジック - ユーザーインターフェースとプロッター統合
 """
 import sys
+import os
 from typing import Optional
 
 from .config import DATA_DIR, OUTPUT_DIR
@@ -13,6 +14,7 @@ from .core import (
     select_columns_interactive
 )
 from .core.file_utils import ensure_output_dir, generate_output_path, get_base_name
+from .core.sample_data import create_sample_data_files
 from .plotters import (
     create_basic_pairplot,
     create_colored_pairplot,
@@ -295,6 +297,50 @@ def run_scatter_boxplot(data_dir: str = DATA_DIR, output_dir: str = OUTPUT_DIR) 
     print("=" * 50)
 
 
+def init_workspace() -> None:
+    """
+    作業ディレクトリを初期化（data/とoutput/フォルダを作成、サンプルデータも生成）
+    """
+    print("\n" + "=" * 60)
+    print("Pairplot Library - ワークスペース初期化")
+    print("=" * 60)
+    print("\nカレントディレクトリに data/ と output/ フォルダを作成します。")
+    print(f"カレントディレクトリ: {os.getcwd()}\n")
+    
+    # data/フォルダの作成
+    data_created = False
+    if os.path.exists(DATA_DIR):
+        print(f"✓ data/ フォルダは既に存在します")
+    else:
+        os.makedirs(DATA_DIR)
+        print(f"✓ data/ フォルダを作成しました")
+        data_created = True
+    
+    # output/フォルダの作成
+    if os.path.exists(OUTPUT_DIR):
+        print(f"✓ output/ フォルダは既に存在します")
+    else:
+        os.makedirs(OUTPUT_DIR)
+        print(f"✓ output/ フォルダを作成しました")
+    
+    # サンプルデータファイルの作成
+    print(f"\nサンプルデータファイルを作成中...")
+    create_sample_data_files(DATA_DIR)
+    
+    print("\n" + "=" * 60)
+    print("初期化が完了しました！")
+    print("=" * 60)
+    print("\n次のステップ:")
+    print("1. サンプルデータで試す:")
+    print("   pairplot")
+    print("   → sample_data1.csv または sample_data2.csv を選択")
+    print("")
+    print("2. 自分のデータを使う:")
+    print("   - CSVファイルを data/ フォルダに配置")
+    print("   - pairplot コマンドを実行")
+    print("=" * 60 + "\n")
+
+
 def main(data_dir: Optional[str] = None, output_dir: Optional[str] = None) -> None:
     """
     メインエントリーポイント
@@ -303,6 +349,11 @@ def main(data_dir: Optional[str] = None, output_dir: Optional[str] = None) -> No
         data_dir: データディレクトリ（指定がない場合はデフォルト使用）
         output_dir: 出力ディレクトリ（指定がない場合はデフォルト使用）
     """
+    # コマンドライン引数をチェック（initコマンド）
+    if len(sys.argv) > 1 and sys.argv[1] == 'init':
+        init_workspace()
+        return
+    
     # デフォルト値の設定
     if data_dir is None:
         data_dir = DATA_DIR

@@ -19,7 +19,7 @@ def read_requirements():
 
 setup(
     name="pairplot-lib",
-    version="1.0.1",
+    version="1.1.2",
     author="Takayuki Tsuji",
     description="CSVデータからペアプロット、散布図、箱ひげ図を生成するツール（白黒描画）",
     long_description=long_description,

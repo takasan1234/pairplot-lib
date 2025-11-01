@@ -27,20 +27,25 @@ pip install "git+https://github.com/takasan1234/pairplot-lib.git"
 
 ### 1. 作業ディレクトリを準備
 
-任意の場所に作業ディレクトリを作成し、そこで作業します：
+任意の場所に作業ディレクトリを作成し、初期化コマンドを実行します：
 
 ```bash
-mkdir data
-mkdir output
+pairplot init
 ```
+
+これで`data/`と`output/`フォルダが自動作成され、サンプルデータ（`sample_data1.csv`と`sample_data2.csv`）も生成されます。
+
+すぐにサンプルデータで試すことができます！
 
 ### 2. データを配置
 
-CSVファイルを`data/`フォルダに入れます：
+自分のCSVファイルを`data/`フォルダに入れます：
 
 ```bash
 cp your_data.csv data/
 ```
+
+**または**サンプルデータをそのまま使ってテストすることもできます（`pairplot init`で自動生成されます）。
 
 ### 3. コマンド実行
 
@@ -109,4 +114,4 @@ pip install --force-reinstall "git+https://github.com/takasan1234/pairplot-lib.g
 ---
 
 **作者**: Takayuki Tsuji  
-**バージョン**: 1.0.1
+**バージョン**: 1.1.2

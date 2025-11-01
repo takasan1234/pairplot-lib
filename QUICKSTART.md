@@ -3,7 +3,7 @@
 ## 初回のみ：インストール
 
 ```bash
-pip install "git+https://github.com/takasan1234/pairplot-lib.git@v1.0.1"
+pip install "git+https://github.com/takasan1234/pairplot-lib.git@v1.1.2"
 ```
 
 インストールが完了すると、`pairplot`コマンドが使えるようになります。
@@ -17,19 +17,24 @@ pip install "git+https://github.com/takasan1234/pairplot-lib.git@v1.0.1"
 mkdir my_analysis
 cd my_analysis
 
-# data と output フォルダを作成
-mkdir data
-mkdir output
+# 初期化コマンドで data と output フォルダ、サンプルデータを作成
+pairplot init
 ```
+
+これで以下が自動生成されます：
+- `data/` フォルダ
+- `output/` フォルダ
+- `data/sample_data1.csv` (タブ区切り)
+- `data/sample_data2.csv` (カンマ区切り)
 
 ### 2. データを配置
 
 ```bash
-# CSVファイルを data/ フォルダに配置
+# 自分のCSVファイルを data/ フォルダに配置
 cp your_data.csv data/
 ```
 
-> サンプルデータ（`sample_data.csv`）を参考にしてください。
+> **ヒント**: サンプルデータ（`sample_data1.csv`, `sample_data2.csv`）が既に用意されているので、すぐに試すこともできます！
 
 ### 3. コマンド実行
 
@@ -121,7 +126,7 @@ A: タブ区切り、カンマ区切り、どちらもOK。自動で判定しま
 A: グループ分けの列。例：0と1、AとBなど。色分けペアプロットで使用。
 
 **Q: コマンドが見つからないと言われる**  
-A: 再インストールしてください：`pip install --force-reinstall "git+https://github.com/takasan1234/pairplot-lib.git@v1.0.1"`
+A: 再インストールしてください：`pip install --force-reinstall "git+https://github.com/takasan1234/pairplot-lib.git@v1.1.2"`
 
 **Q: 画像が白黒なのはなぜ？**  
 A: 印刷・論文用に最適化しています。
